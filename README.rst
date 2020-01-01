@@ -37,7 +37,7 @@ Google Cloud Resources Hierarchy
 .. _resource_hierarchy:
 
 .. image:: assets/images/resource_hierarchy.png
-   :width: 50%
+     :width: 50%
 
 
 The Resources Hierarchy is how Google Cloud organises access to resources. The hierarchy is similar to arranging files on a computer. Only the files here represent for example Compute Engine or BigQuery. The Organisation represents the root or top of the "file system". Each directory in the "file system" tree can have access rights and permissions set on it. In my case the next level down from Organisation will be Projects. Beneath each project comes the individual Resources.
@@ -45,7 +45,7 @@ The Resources Hierarchy is how Google Cloud organises access to resources. The h
 At each level in the Resources Hierarchy you can set access controls and configuration. All controls and configuration are inherited down from the point they are set. For example if a user is given Administrator rights over Compute Engine at the Organisational level, they will have the same rights all the way down. However, if they only have Administrator rights at a project level, they will not be able to control other Project's Compute Engine.
 
 .. image:: assets/images/resource_hierarchy_with_folders.png
-   :width: 50%
+     :width: 50%
 
 
 Technically there is another level between Organisation and Projects. These are called Folders. They are used to mirror your corporate structure. As a small company I don't need this yet. You can read more about using Folders here https://cloud.google.com/resource-manager/docs/creating-managing-folders.
