@@ -21,9 +21,9 @@ I've done a lot of reading and experimenting with Google Cloud over the past few
 
 Key concepts to know:
 
-- :ref:`Google Cloud Resources Hierarchy <resource_hierarchy>`
-- :ref:`Google Cloud Identity and Access Management (IAM) <iam>`
-- :ref:`Shared Virtual Private Cloud (VPC) <shared_vpc>`
+- `Google Cloud Resources Hierarchy`_
+- `Google Cloud Identity and Access Management (IAM)`_
+- `Shared Virtual Private Cloud (VPC)`_
 
 My approach:
 
@@ -35,8 +35,6 @@ My approach:
 
 Google Cloud Resources Hierarchy
 --------------------------------
-
-.. _resource_hierarchy:
 
 .. image:: assets/images/resources_hierarchy.png
     :align: center
@@ -57,8 +55,6 @@ For an indepth dive into this have a look at Google's documentation here https:/
 
 Google Cloud Identity and Access Management (IAM)
 -------------------------------------------------
-
-.. _iam:
 
 With Cloud IAM you control who has what access to which resources. IAM uses a Role Based Access Control system applied at points in the Resource Hierarchy. The "who" is also known as the identity. The identity is granted one or more roles. The roles an identity holds at a point in the hierarchy determine what it can do. I'm not going to give an in-depth dive into all IAM abilties and functionality. I'm just going to cover what I and probably most people need day to day.
 
@@ -84,12 +80,7 @@ TIP: When reading Google documentation, you will often find it mentions individu
 Simply perform a page search for the permission to see which roles have the permssion.
 
 
---
-
-
 Shared Virtual Private Cloud (VPC)
-
-.. _shared_vpc:
 
 I want to have a single place to control the firewall, networking and routing. Google Cloud provides Shared VPC to provide this functionality.
 
