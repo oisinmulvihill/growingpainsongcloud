@@ -20,11 +20,13 @@ Requirements:
 I've done a lot of reading and experimenting with Google Cloud over the past few years. Finding the right thing in Google's documentation can be tricky. I'm going to explain the useful things I've learned and on the journey to my approach.
 
 Key concepts to know:
-- Google Cloud Resources Hierarchy :ref:`resource_hierarchy`
-- Google Cloud Identity and Access Management (IAM) :ref:`iam`
-- Shared Virtual Private Cloud (VPC) :ref:`shared_vpc`
+
+- :ref:`Google Cloud Resources Hierarchy <resource_hierarchy>`
+- :ref:`Google Cloud Identity and Access Management (IAM) <iam>`
+- :ref:`Shared Virtual Private Cloud (VPC) <shared_vpc>`
 
 My approach:
+
 - Terraform
 - Security
 - Staff, Groups & IAM
