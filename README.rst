@@ -12,10 +12,10 @@ As a startup grows it builds and iterates quickly. For my company this meant our
 Requirements:
 - A single place to manage the Firewall, Network and Routing.
 - Virtual machines to be private and not public by default.
-- Versioning and control my configuration with Terraform.
 - Staff with only the permssions needed for their day to day work.
 - Freedom to use Resouces at the Project level but in a safe manner.
 - To know about vunerabilities and problems on my cloud.
+- Versioning and management of my configuration with Terraform.
 
 I've done a lot of reading and experimenting with Google Cloud over the past few years. Finding the right thing in Google's documentation can be tricky. I'm going to explain the useful things I've learned and on the journey to my approach.
 
@@ -23,11 +23,12 @@ Key concepts to know:
 
 - `Google Cloud Resources Hierarchy`_
 - `Google Cloud Identity and Access Management (IAM)`_
+- `Configuration Management with Terraform`_
 - `Shared Virtual Private Cloud (VPC)`_
 
 My approach:
 
-- Terraform
+- `Configuration Management with Terraform`_
 - Security
 - Staff, Groups & IAM
 - Shared VPC
@@ -80,7 +81,16 @@ TIP: When reading Google documentation, you will often find it mentions individu
 Simply perform a page search for the permission to see which roles have the permssion.
 
 
-Shared Virtual Private Cloud (VPC)
+Configuration Management with Terraform
+---------------------------------------
 
-I want to have a single place to control the firewall, networking and routing. Google Cloud provides Shared VPC to provide this functionality.
+Configuration management is the ability to automatically create or recreate your infrastructure from code. Configuring your infrastructure manually, while easier initially, quickly leads to many downsides. Chief amongst there are the difficultly of recreating your set up in case of accident or disaster. The knowledge may have left the business when you need it most.
+
+I choose `Terraform <https://www.terraform.io/docs/index.html>`_ as my configuration management tool. The tool is less important then the ability to recreate your infrastructure from code. There are many other tools out there to choose from. Whether you starting from scratch or some time later, it is worth investing the time it takes to do the Terraform set up. Its never too late to use configuration management!
+
+
+Shared Virtual Private Cloud (VPC)
+----------------------------------
+
+I want to have a single place to control the firewall, networking and routing. Google Cloud Shared VPC provide this functionality.
 
