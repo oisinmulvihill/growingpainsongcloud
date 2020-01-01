@@ -36,7 +36,7 @@ Google Cloud Resources Hierarchy
 
 .. _resource_hierarchy:
 
-.. image:: assets/images/resource_hierarchy.svg
+.. image:: assets/images/resource_hierarchy.png
    :width: 50%
 
 
@@ -44,7 +44,7 @@ The Resources Hierarchy is how Google Cloud organises access to resources. The h
 
 At each level in the Resources Hierarchy you can set access controls and configuration. All controls and configuration are inherited down from the point they are set. For example if a user is given Administrator rights over Compute Engine at the Organisational level, they will have the same rights all the way down. However, if they only have Administrator rights at a project level, they will not be able to control other Project's Compute Engine.
 
-.. image:: assets/images/resource_hierarchy_with_folders.svg
+.. image:: assets/images/resource_hierarchy_with_folders.png
    :width: 50%
 
 
