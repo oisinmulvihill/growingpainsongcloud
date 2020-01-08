@@ -28,15 +28,14 @@ Key concepts to know:
 - `Google Cloud Resources Hierarchy`_
 - `Google Cloud Identity and Access Management (IAM)`_
 - `Configuration Management with Terraform`_
-- `Shared Virtual Private Cloud (VPC)`_
 
 My approach:
 
 - `Configuration Management with Terraform`_
-- `Cloud Security Command Center`_
-- `Configuration Management with Terraform`_
-- Staff, Groups & IAM
+- `Staff, Groups & IAM`_
 - `Shared Virtual Private Cloud (VPC)`_
+- `Private Kubernetes (K8s) Cluster`_
+- `Cloud Security Command Center`_
 
 
 Google Cloud Resources Hierarchy
@@ -91,13 +90,20 @@ Configuration Management with Terraform
 
 Configuration management is the ability to automatically create or recreate your infrastructure from code. Configuring your infrastructure manually, while easier initially, quickly leads to many downsides. Chief amongst them are the difficultly of recreating your set up in case of accident or disaster. The knowledge may have left the business when you need it most.
 
-I choose `Terraform <https://www.terraform.io/docs/index.html>`_ as my configuration management tool. The tool is less important then the ability to recreate your infrastructure from code. There are many other tools out there to choose from. Whether you starting from scratch or some time later, it is worth investing the time it takes to do the Terraform set up. Its never too late to use configuration management!
+I choose `Terraform <https://www.terraform.io/docs/index.html>`_ as my configuration management tool. The tool is less important then the ability to recreate your infrastructure from code. There are many other tools out there to choose from. Whether you're starting from scratch or some time later, it is worth investing the time it takes to do the Terraform set up. Its never too late to use configuration management!
 
 I have created a Github template repository to aid getting off the ground. You can use this to get started and make it a private repository in your own organisation.
 
 - https://github.com/oisinmulvihill/gcp_and_terraform_initial_template
 
 The first person performing the set up is assumed to be the system administrator. They will develop the Terraform configuration to create users and groups.
+
+I have set up my own GSuite and Google Cloud using my new domain "growingpainsongcloud.com". Using the template I have created my own private copy the repository.
+
+
+Staff, Groups & IAM
+-------------------
+
 
 
 Shared Virtual Private Cloud (VPC)
