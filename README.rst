@@ -7,17 +7,21 @@ What I'd like
 [picture of disorganised tools]
 What I have now
 
-As a startup grows it builds and iterates quickly. For my company this meant our Google Cloud layout had grown organically rather then being planned. Cracks had begun to show. It was hard to manage the firewalls across many projects. Servers and services were available publically when there was no need to be. People had privileges they did not need to have. I needed to take a step back. How would I lay out Google Cloud if I started again? How would I then migrate from where I am to the approach I want to take.
+As a startup grows it builds and iterates quickly. For my company this meant our Google Cloud layout had grown organically rather then being planned. Cracks had begun to show. It was hard to manage the firewalls across many projects. Servers and services were available publicly when there was no need to be. People had privileges they did not need to have. I needed to take a step back. How would I lay out Google Cloud if I started again? How would I then migrate from where I am to the approach I want to take.
 
 Requirements:
 - A single place to manage the Firewall, Network and Routing.
 - Virtual machines to be private and not public by default.
-- Staff with only the permssions needed for their day to day work.
-- Freedom to use Resouces at the Project level but in a safe manner.
-- To know about vunerabilities and problems on my cloud.
+- Staff with only the permissions needed for their day to day work.
+- Freedom to use Resources at the Project level but in a safe manner.
+- To know about vulnerabilities and problems on my cloud.
 - Versioning and management of my configuration with Terraform.
 
 I've done a lot of reading and experimenting with Google Cloud over the past few years. Finding the right thing in Google's documentation can be tricky. I'm going to explain the useful things I've learned and on the journey to my approach.
+
+Prerequistes:
+- Google Suite (GSuite) set up for a domain which in my case will be for growingpainsongcloud.com
+- Organisation set up for growingpainsongcloud.com on google cloud https://cloud.google.com/resource-manager/docs/quickstart-organizations
 
 Key concepts to know:
 
@@ -29,9 +33,10 @@ Key concepts to know:
 My approach:
 
 - `Configuration Management with Terraform`_
-- Security
+- `Cloud Security Command Center`_
+- `Configuration Management with Terraform`_
 - Staff, Groups & IAM
-- Shared VPC
+- `Shared Virtual Private Cloud (VPC)`_
 
 
 Google Cloud Resources Hierarchy
@@ -59,7 +64,7 @@ Google Cloud Identity and Access Management (IAM)
 
 With Cloud IAM you control who has what access to which resources. IAM uses a Role Based Access Control system applied at points in the Resource Hierarchy. The "who" is also known as the identity. The identity is granted one or more roles. The roles an identity holds at a point in the hierarchy determine what it can do. I'm not going to give an in-depth dive into all IAM abilties and functionality. I'm just going to cover what I and probably most people need day to day.
 
-A role is made up of individual granular permissions. The permissions control small pieces of behaviour. For example "bigquery.tables.get" permission allows you to get information about a table in BigQuery, but not the data in the table. Just having this permssion is not very useful on its own. It is the grouping of these small permissions into roles which gives power and fine grained control. Google has three type of Roles. Primitive, Predefined and Custom Roles. I haven't needed to use custom roles and so will ignore this here.
+A role is made up of individual granular permissions. The permissions control small pieces of behaviour. For example "bigquery.tables.get" permission allows you to get information about a table in BigQuery, but not the data in the table. Just having this permission is not very useful on its own. It is the grouping of these small permissions into roles which gives power and fine grained control. Google has three type of Roles. Primitive, Predefined and Custom Roles. I haven't needed to use custom roles and so will ignore this here.
 
 The Primitive roles are called the Owner, Editor and Viewer. Viewer gives read-only abilities that don't modify data. Editor allows limited modification and Owner grants full abilities. Having the Owner role means you also have the Editor and Viewer abilities. Having the Editor means you also have the Viewer Abilities. These roles get you going faster, however they can give broad abilities that may not be needed.
 
@@ -69,28 +74,66 @@ The final bit of IAM is the creation of a Policy. A policy is made up of at leas
 
 We use GSuite for our business and each staff member has an account on it. Our main domain is also set up as an Organisation in Google Cloud. Google knows about the link between GSuite and Google Cloud. I can assign staff members to Google Groups and bind those groups to specific predefined roles.
 
-Google has some very indepth documentation on IAM. To go deeper into how it works beyond what I've talked about I would recommend reading:
+Google has some very in-depth documentation on IAM. To go deeper into how it works beyond what I've talked about I would recommend reading:
 
 - https://cloud.google.com/iam/docs/overview
 - https://cloud.google.com/iam/docs/understanding-roles
 
-TIP: When reading Google documentation, you will often find it mentions individual permissions for fuctionality you might need. How do you find the role which could give you this? I find this page very helpful for this:
+TIP: When reading Google documentation, you will often find it mentions individual permissions for functionality you might need. How do you find the role which could give you this? I find this page very helpful for this:
 
 - https://cloud.google.com/iam/docs/permissions-reference
 
-Simply perform a page search for the permission to see which roles have the permssion.
+Simply perform a page search for the permission to see which roles have the permission.
 
 
 Configuration Management with Terraform
 ---------------------------------------
 
-Configuration management is the ability to automatically create or recreate your infrastructure from code. Configuring your infrastructure manually, while easier initially, quickly leads to many downsides. Chief amongst there are the difficultly of recreating your set up in case of accident or disaster. The knowledge may have left the business when you need it most.
+Configuration management is the ability to automatically create or recreate your infrastructure from code. Configuring your infrastructure manually, while easier initially, quickly leads to many downsides. Chief amongst them are the difficultly of recreating your set up in case of accident or disaster. The knowledge may have left the business when you need it most.
 
 I choose `Terraform <https://www.terraform.io/docs/index.html>`_ as my configuration management tool. The tool is less important then the ability to recreate your infrastructure from code. There are many other tools out there to choose from. Whether you starting from scratch or some time later, it is worth investing the time it takes to do the Terraform set up. Its never too late to use configuration management!
+
+I have created a Github template repository to aid getting off the ground. You can use this to get started and make it a private repository in your own organisation.
+
+- https://github.com/oisinmulvihill/gcp_and_terraform_initial_template
+
+The first person performing the set up is assumed to be the system administrator. They will develop the Terraform configuration to create users and groups.
 
 
 Shared Virtual Private Cloud (VPC)
 ----------------------------------
 
-I want to have a single place to control the firewall, networking and routing. Google Cloud Shared VPC provide this functionality.
+I would like project owner's to have freedom to spin up the services they need internally, without it ending up on the internet. For this I want to have a single place to control the firewall, networking and routing. Google Cloud Shared VPC provides this functionality.
 
+.. image:: assets/images/resources_hierarchy_with_folders.png
+    :align: center
+    :alt: Resources Hierarchy with Folders
+
+- Terraform project
+- Host project
+  - firewall
+  - network / subnet set up
+  - routing / masquerading
+  - DNS (not part of shared VPC but I manage DNS as part of the host project)
+  - delete default network (after provisioning)
+- Service projects
+  - no control over firewall or routing
+  - gets permission from the host project to use the network / subnet
+  - delete default network (after provisioning)
+
+
+Private Kubernetes (K8s) Cluster
+--------------------------------
+
+By default spinning up a new K8s cluster will result in node in the cluster being given a public IP address. If your firewall is using the defaults the general public can then attempt to brute force SSH logins if so inclined.
+
+Types:
+- No access for cluster nodes to the Internet.
+- Access for cluster nodes to outgoing internet only.
+- Access for cluster nodes to outgoing and incoming internet traffic.
+
+No Access
+
+
+Cloud Security Command Center
+-----------------------------
