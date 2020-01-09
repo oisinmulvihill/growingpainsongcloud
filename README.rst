@@ -7,9 +7,14 @@ What I'd like
 [picture of disorganised tools]
 What I have now
 
-As a startup grows it builds and iterates quickly. For my company this meant our Google Cloud layout had grown organically rather then being planned. Cracks had begun to show. It was hard to manage the firewalls across many projects. Servers and services were available publicly when there was no need to be. People had privileges they did not need to have. I needed to take a step back. How would I lay out Google Cloud if I started again? How would I then migrate from where I am to the approach I want to take.
+As a startup grows it builds and iterates quickly. For my company this means our Google Cloud has grown organically rather then being planned. Cracks have begun to show. It can be hard to manage the firewalls across many projects. Servers and services are available publicly when there was no need to be. People have privileges they do not need to have. 
 
-Requirements:
+I need to take a step back. How would I lay out Google Cloud if I started again? From this position I could then decide how to migrate from where I am to this brave new world.
+
+To help me and others in a similar situation I'm going to explain what I've learned using the new domain I've just bought "growingpainsongloud.com". I'm going to set up GSuite and Google Cloud for it.
+
+Requirements
+
 - A single place to manage the Firewall, Network and Routing.
 - Virtual machines to be private and not public by default.
 - Staff with only the permissions needed for their day to day work.
@@ -17,9 +22,8 @@ Requirements:
 - To know about vulnerabilities and problems on my cloud.
 - Versioning and management of my configuration with Terraform.
 
-I've done a lot of reading and experimenting with Google Cloud over the past few years. Finding the right thing in Google's documentation can be tricky. I'm going to explain the useful things I've learned and on the journey to my approach.
+I've done a lot of reading and experimenting with Google Cloud over the past few years. Finding the right thing in Google's documentation can be tricky. I'm going to explain the useful things I've learned on the journey. What I've set up:
 
-Prerequistes:
 - Google Suite (GSuite) set up for a domain which in my case will be for growingpainsongcloud.com
 - Organisation set up for growingpainsongcloud.com on google cloud https://cloud.google.com/resource-manager/docs/quickstart-organizations
 
@@ -29,9 +33,8 @@ Key concepts to know:
 - `Google Cloud Identity and Access Management (IAM)`_
 - `Configuration Management with Terraform`_
 
-My approach:
+From scratch:
 
-- `Configuration Management with Terraform`_
 - `Staff, Groups & IAM`_
 - `Shared Virtual Private Cloud (VPC)`_
 - `Private Kubernetes (K8s) Cluster`_
@@ -55,7 +58,7 @@ At each level in the Resources Hierarchy you can set access controls and configu
 
 Technically there is another level between Organisation and Projects. These are called Folders. They are used to mirror your corporate structure. As a small company I don't need this yet. You can read more about using Folders here https://cloud.google.com/resource-manager/docs/creating-managing-folders.
 
-For an indepth dive into this have a look at Google's documentation here https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarch.
+For an in-depth dive into this have a look at Google's documentation here https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarch.
 
 
 Google Cloud Identity and Access Management (IAM)
@@ -100,10 +103,22 @@ The first person performing the set up is assumed to be the system administrator
 
 I have set up my own GSuite and Google Cloud using my new domain "growingpainsongcloud.com". Using the template I have created my own private copy the repository.
 
+This is a good introduction to Terraform on Google Cloud. I used this when I started out.
+
+- https://cloud.google.com/community/tutorials/getting-started-on-gcp-with-terraform
 
 Staff, Groups & IAM
 -------------------
 
+GSuite is where the staff accounts and user groups live. Terraform on Google Cloud will manage the creation of Policies. These policies will use the groups as members of the policies. Staff members that need access can be put into groups.
+
+For my domain I have created three groups on GSuite
+
+- application-editors-group
+- data-editors-group
+- org-sysadmin-group
+
+There are three staff members including myself. "Alice Scientist" is my lead data scientist and will manage the Data project which will be created later. "Bob Application" is my lead developer. He will manage the Application project when its created. I'm in the "org-sysadmin-group" although as the creator of the GSuite/Google Cloud Accounts I have super admin rights already.
 
 
 Shared Virtual Private Cloud (VPC)
